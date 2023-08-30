@@ -55,6 +55,10 @@ public class TokenService {
 		}
 		return subject;
 	}
+	public Boolean validateToken(String token, UserDetails userDetails) {
+		final String username = extractUsername(token);
+		return (username.equals(userDetails.getUsername()) && !isExpired(token));
+	}
 	public boolean isExpired(String token) {
 		
 		DecodedJWT decodedJwt = null;

@@ -11,4 +11,11 @@ spring:
     hibernate:
       ddl-auto: update
 
+      #Swagger Props
+springdoc:
+  swagger-ui:
+    path:
+      /swagger-ui:
+      html: /swagger-ui/index.html#/
+
 server.port: 8082

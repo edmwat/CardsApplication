@@ -39,51 +39,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 	@Autowired
 	private ObjectMapper mapper;
 
-//	@Override
-//	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-//			throws ServletException, IOException {
-//		System.out.println("Servlet Path: "+request.getServletPath());
-//		if(request.getServletPath().equals("/authenticate")
-//				|| request.getServletPath().equals("/swagger-ui/**")) {
-//			System.out.println();
-//			System.out.println();
-//			filterChain.doFilter(request, response);
-//		}else {
-//			try {
-//				final String authorizationHeader = request.getHeader("Authorization");
-//				String username ="";
-//
-//					if( authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-//						String jwt = authorizationHeader.substring(7);
-//						username = tokenFactory.extractUsername(jwt);
-//
-//					}else {
-//						throw new InvalidTokenExption("The Token Header is Null",401);
-//					}
-//					if(Objects.nonNull(username) && !username.isEmpty() && SecurityContextHolder.getContext().getAuthentication() == null){
-//
-//
-//						UserDetails userDetails = userService.loadUserByUsername(username);
-//						UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-//								new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
-//
-//						usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource());
-//						SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-//
-//					}
-//
-//				filterChain.doFilter(request,response);
-//			}catch(RuntimeException e) {
-//				log.info(e.getMessage());
-//				ErrorResponse er = new ErrorResponse();
-//				er.setMessage(e.getMessage());
-//				//er.setErrorCode(401);
-//				response.setStatus(401);
-//				response.getWriter().write(convertObjectToJson(er));
-//			}
-//		}
-//
-//	}
 	public String convertObjectToJson(Object object) throws JsonProcessingException {
         if (object == null) {
             return null;
@@ -121,10 +76,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 			}
 		} else {
 			logger.warn("JWT Token does not begin with Bearer String");
-//            errorDetails.put("message", "JWT Token does not begin with Bearer String");
-//            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-//            mapper.writeValue(response.getWriter(), errorDetails);
-
 		}
 
 		//Once we get the token validate it.
@@ -143,7 +94,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 				// After setting the Authentication in the context, we specify
 				// that the current user is authenticated. So it passes the Spring Security Configurations successfully.
 				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-
 			}
 		}
 		chain.doFilter(request, response);
